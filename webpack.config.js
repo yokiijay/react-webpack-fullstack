@@ -8,8 +8,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     filename: 'bundle.js',
-    path: path.join(__dirname, 'dist'),
-    publicPath: path.join(__dirname, 'dist')
+    path: path.join(__dirname, 'dist')
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
@@ -26,6 +25,14 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_componnets)/,
         use: ['babel-loader']
+      },
+      {
+        test: /\.(png|jpg|gif|webp|svg)$/,
+        use: ['file-loader?name=img/[name].[ext]']
+      },
+      {
+        test: /\.(htm|html)$/,
+        use: ['html-withimg-loader']
       }
     ]
   },
@@ -33,8 +40,8 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: 'React',
-      template: './src/index.html',
-      filename: 'index.html'
+      filename: 'index.html',
+      template: './src/index.html'
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
