@@ -1,17 +1,19 @@
 const path = require('path')
 const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+// const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = {
+  target: 'node',
   mode: 'development',
   entry: {
-    app: path.join(__dirname, '../client/index.js')
+    app: path.join(__dirname, '../client/server-entry.js')
   },
   output: {
-    filename: '[hash:4]-boundle.js',
+    filename: 'server-entry.js',
     path: path.join(__dirname, '../dist'),
-    // publicPath: '/public'
+    publicPath: '/',
+    libraryTarget: 'commonjs2'
   },
   devServer: {
     contentBase: path.join(__dirname, '../dist'),
@@ -26,7 +28,7 @@ module.exports = {
       },
       {
         test: /\.(js|jsx)$/,
-        exclude: /(node_modules|bower_componnets)/,
+        exclude: path.join(__dirname, '../node_modules'),
         use: ['babel-loader']
       },
       {
@@ -36,12 +38,12 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      title: 'React',
-      filename: 'index.html',
-      template: './client/index.html'
-    }),
+    // new CleanWebpackPlugin(),
+    // new HtmlWebpackPlugin({
+    //   title: 'React',
+    //   filename: 'index.html',
+    //   template: './client/index.html'
+    // }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ]
