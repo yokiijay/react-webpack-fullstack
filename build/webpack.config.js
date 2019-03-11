@@ -5,13 +5,16 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = {
   mode: 'development',
-  entry: './src/index.js',
+  entry: {
+    app: path.join(__dirname, '../client/index.js')
+  },
   output: {
-    filename: 'bundle.js',
-    path: path.join(__dirname, 'dist')
+    filename: '[hash:4]-boundle.js',
+    path: path.join(__dirname, '../dist'),
+    // publicPath: '/public'
   },
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: path.join(__dirname, '../dist'),
     hot: true,
     port: 3000
   },
@@ -29,10 +32,6 @@ module.exports = {
       {
         test: /\.(png|jpg|gif|webp|svg)$/,
         use: ['file-loader?name=img/[name].[ext]']
-      },
-      {
-        test: /\.(htm|html)$/,
-        use: ['html-withimg-loader']
       }
     ]
   },
@@ -41,7 +40,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'React',
       filename: 'index.html',
-      template: './src/index.html'
+      template: './client/index.html'
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
