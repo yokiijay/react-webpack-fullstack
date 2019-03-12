@@ -7,7 +7,9 @@ class App extends Component {
   render() {
     return(
       <Fragment>
-        react hahasss
+        cool
+        <h1>Hello webpack SSR React</h1>
+        <h2>amazing</h2>
       </Fragment>
     )
   }

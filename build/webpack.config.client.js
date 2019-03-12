@@ -9,14 +9,24 @@ module.exports = {
     app: path.join(__dirname, '../client/index.js')
   },
   output: {
-    filename: 'boundle.js',
+    filename: '[name]-[hash:4]-bundle.js',
     path: path.join(__dirname, '../dist'),
-    publicPath: '/'
+    publicPath: '/public/'
   },
   devServer: {
     contentBase: path.join(__dirname, '../dist'),
     hot: true,
-    port: 3000
+    host: '0.0.0.0',
+    port: 3000,
+    publicPath: '/public/',
+    historyApiFallback: {
+      index: '/public/index.html',
+      disableDotRule: true
+    },
+    overlay: {
+      warning: true,
+      error: true
+    }
   },
   module: {
     rules: [
@@ -38,11 +48,15 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      title: 'React',
       filename: 'index.html',
-      template: './client/index.html'
+      template: path.join(__dirname, '../client/template.html')
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
-  ]
+  ],
+  resolve: {
+    alias: {
+      'react-dom': '@hot-loader/react-dom'
+    }
+  }
 }
